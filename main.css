@@ -30,3 +30,11 @@ body{
     border-width: 1px;
     border-color:rgb(6, 11, 15);
 }
+
+.fa-chevron-right{
+    color: rgb(163, 248, 66);
+    position:absolute;
+    left:0px;
+    top:0px;
+    z-index: 100;
+}
