@@ -16,6 +16,22 @@
     <div id="objects">
         
     </div>
+    <div id="creation-menu">
+        <label for="name">name:</label>
+        <input type="text" id="name" name="name">
+        <label for="xdim">x-dim:</label>
+        <input type="text" id="xdim" name="xdim">
+        <label for="ydim">y-dim:</label>
+        <input type="text" id="ydim" name="ydim">
+        <label for="directions">where are the arrows:</label>
+        <select name="directions" id="directions">
+            <option value="up">up</option>
+            <option value="right">right</option>
+            <option value="down">down</option>
+            <option value="left">left</option>
+        </select>
+        <button type="button", id = "create", onclick="create()">Create!</button>
+    </div>
 </body>
 
 <main>

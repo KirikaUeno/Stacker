@@ -1,5 +1,10 @@
 const gridDiv = document.getElementById("grid");
 const objectsDiv = document.getElementById("objects");
+const nameInput = document.getElementById("name");
+const dimXInput = document.getElementById("xdim");
+const dimYInput = document.getElementById("ydim");
+const directionInput = document.getElementById("directions");
+const submitButton = document.getElementById("create");
 
 var draggedObject;
 var objects = [];
@@ -25,6 +30,9 @@ function addArrow(i,j,d){
   arrow = document.createElement("i", { is: 'arrow'+indexOfArrow.toString()});
   arrow.classList.add('fa-solid');
   arrow.classList.add('fa-chevron-right');
+  arrow.setAttribute('draggable', "false");
+  /*arrow.setAttribute('ondragover', "allowDrop(event)");
+  arrow.setAttribute('ondrop', "dropToArrow(event)");*/
   switch(d){
     case 'up': arrow.classList.add('fa-rotate-270');
     case 'left': 
@@ -46,10 +54,11 @@ addArrow(55,13,'left');
 addArrow(55,16,'left');
 addArrow(55,25,'left');
 
-function createObjects(n, w1, h1, t1, l1){
+var objectNumber = 0;
+function createObjects(n, w1, h1, t1, l1,name){
     objects = [];
     for(let i=0; i<n; i++){
-        objects[i] = document.createElement('object-'+w1.toString()+'-'+h1.toString()+'_'+i.toString());
+        objects[i] = document.createElement('object-'+objectNumber.toString());
         objects[i].classList.add('object');
         objects[i].setAttribute('draggable', "true");
         objects[i].setAttribute('ondragstart', "drag(event)");
@@ -79,20 +88,30 @@ function createObjects(n, w1, h1, t1, l1){
           indexOfArrow+=1;
         }
         objectsDiv.appendChild(objects[i]);
+        const para = document.createElement("p");
+        const textNode = document.createTextNode(name);
+        para.appendChild(textNode);
+        objects[i].appendChild(para);
+        objectNumber+=1;
     }
 }
 
-createObjects(10,3,3,10,1150);
-createObjects(5,12,9,620,10);
-createObjects(8,4,4,90,1150);
-createObjects(4,4,8,190,1150);
-createObjects(1,3,6,190,1520);
-createObjects(1,4,6,190,1600);
-createObjects(1,9,9,370,1150);
-createObjects(1,5,6,370,1350);
-createObjects(1,5,7,370,1470);
-createObjects(1,15,6,370,1590);
-createObjects(1,9,6,190,1600);
+function create(){
+  console.log(nameInput);
+  createObjects(1,dimXInput.value,dimYInput.value,50,1150,nameInput.value);
+}
+
+createObjects(16,3,3,820,10,"3X3");
+createObjects(5,12,9,620,10,"12X9");
+createObjects(8,4,4,90,1150,"4X4");
+createObjects(4,4,8,190,1150,"4X8");
+createObjects(1,3,6,190,1520,"3X6");
+createObjects(1,4,6,190,1600,"4X6");
+createObjects(1,9,9,370,1150,"9X9");
+createObjects(1,5,6,370,1350,"5X6");
+createObjects(1,5,7,370,1470,"5X7");
+createObjects(1,15,6,370,1590,"15X6");
+createObjects(1,9,6,190,1600,"9X6");
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -104,11 +123,12 @@ function allowDrop(ev) {
   }
   
   function drop(ev) {
+    //console.log(document.elementFromPoint(ev.clientX, ev.clientY));
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    const cell = document.getElementsByTagName(data).item(0);
-    cell.style.left = ev.target.style.left;
-    cell.style.top = ev.target.style.top;
+    const obj = document.getElementsByTagName(data).item(0);
+    obj.style.left = ev.target.className=='grid-block'?ev.target.style.left:ev.target.parentElement.style.left;
+    obj.style.top = ev.target.className=='grid-block'?ev.target.style.top:ev.target.parentElement.style.top;
   }
 
   document.addEventListener('keydown', function(event) {
@@ -132,8 +152,8 @@ function allowDrop(ev) {
             objectd.setAttribute('direction','down');
             break;
         }
-        while (objectd.firstChild) {
-          objectd.removeChild(objectd.firstChild);
+        for(var i=objectd.childNodes.length-1;i>=0;i--){
+          if(objectd.childNodes[i].tagName!='P') objectd.removeChild(objectd.childNodes[i]);
         }
         var sideWithArrows = 'up';
         switch (objectd.getAttribute('arrowSide')){
@@ -220,12 +240,12 @@ function allowDrop(ev) {
               break;
             case 'down':
               arrow.classList.add('fa-rotate-90');
-              arrow.style.top = (((objectd.style.height.substr(0,objectd.style.height.length-2))/20-1)*20).toString()+'px';
+              arrow.style.top = (((objectd.style.height.substr(0,objectd.style.height.length-2))/20-0.7)*20).toString()+'px';
               arrow.style.left = (3+j*20).toString()+'px';
               break;
             case 'right':
               arrow.style.top = (2+j*20).toString()+'px';
-              arrow.style.left = (((objectd.style.width.substr(0,objectd.style.width.length-2))/20-1)*20).toString()+'px';
+              arrow.style.left = (((objectd.style.width.substr(0,objectd.style.width.length-2))/20-0.7)*20).toString()+'px';
               break;
           }
           arrow.style.color = 'rgb(212, 236, 102)';

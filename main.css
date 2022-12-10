@@ -31,6 +31,14 @@ body{
     border-color:rgb(6, 11, 15);
 }
 
+.object p{
+    position: absolute;
+    padding: 15px;
+    margin: 0px;
+    top: 0px;
+    left:0px;
+}
+
 .fa-chevron-right{
     color: rgb(163, 248, 66);
     position:absolute;
@@ -48,4 +56,26 @@ main p{
     left: 1350px;
     top: 700px;
     color:rgb(255, 255, 255);
+}
+
+#creation-menu{
+    position:absolute;
+    top:5px;
+    left:1150px;
+}
+
+#name{
+    width: 80px;
+}
+#xdim{
+    width: 15px;
+}
+#ydim{
+    width: 15px;
+}
+#create{
+    width: 80px;
+    position: absolute;
+    top: 0px;
+    left: 490px;
 }
