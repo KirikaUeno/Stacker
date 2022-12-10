@@ -21,18 +21,30 @@ for(let i=0; i<56; i++){
 }
 
 var indexOfArrow = 0;
-function addArrow(i,j){
+function addArrow(i,j,d){
   arrow = document.createElement("i", { is: 'arrow'+indexOfArrow.toString()});
   arrow.classList.add('fa-solid');
   arrow.classList.add('fa-chevron-right');
+  switch(d){
+    case 'up': arrow.classList.add('fa-rotate-270');
+    case 'left': 
+      arrow.classList.add('fa-rotate-180');
+      arrow.style.right = '0px';
+
+    case 'down': arrow.classList.add('fa-rotate-90');
+  }
   cells[i*30+j].appendChild(arrow);
   indexOfArrow+=1;
 }
 
-addArrow(0,4);
-addArrow(0,13);
-addArrow(0,16);
-addArrow(0,25);
+addArrow(0,4,'right');
+addArrow(0,13,'right');
+addArrow(0,16,'right');
+addArrow(0,25,'right');
+addArrow(55,4,'left');
+addArrow(55,13,'left');
+addArrow(55,16,'left');
+addArrow(55,25,'left');
 
 function createObjects(n, w1, h1, t1, l1){
     objects = [];
