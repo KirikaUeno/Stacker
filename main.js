@@ -106,7 +106,7 @@ createObjects(5,12,9,620,10,"12X9");
 createObjects(8,4,4,90,1150,"4X4");
 createObjects(4,4,8,190,1150,"4X8");
 createObjects(1,3,6,190,1520,"3X6");
-createObjects(1,4,6,190,1600,"4X6");
+createObjects(1,4,6,190,1800,"4X6");
 createObjects(1,9,9,370,1150,"9X9");
 createObjects(1,5,6,370,1350,"5X6");
 createObjects(1,5,7,370,1470,"5X7");
