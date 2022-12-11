@@ -30,14 +30,22 @@
             <option value="down">down</option>
             <option value="left">left</option>
         </select>
+        <label for="color">color:</label>
+        <input type="color" id="color-choice" name="color-choice", value="#3ccbf6">
         <button type="button", id = "create", onclick="create()">Create!</button>
+    </div>
+    <div id = "deletionMenu">
+        <button type="button", id = "delete", onclick="deleteObj()">Delete!</button>
     </div>
 </body>
 
 <main>
     <p>
         You can drag the blue objects and drop them to the grid. <br> It works better if you drag the top-left corners. <br><br>
-        If you press 'r', the last dragged object will rotate.
+        If you press 'r', the last dragged object will rotate.<br>
+        RMB on an object - show the deletion menu. Then click 'delete!' - the object will be deleted.<br><br>
+        In order to create an object, enter its name and dimensions, and choose where a road should be connected. Press 'Create!'.<br>
+        Objects are created in one dedicated spot, so if you create multiple - don't miss them: they are under each other.
     </p>
 </main>
 
