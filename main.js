@@ -109,7 +109,7 @@ function createObjects(n, w1, h1, direction, t1, l1,name,color){
           e.preventDefault();
           e.stopImmediatePropagation();
           if(e.button==2){
-            deletionMenu.setAttribute('objectToDelete',e.target.tagName.toString());
+            deletionMenu.setAttribute('objectToDelete',(e.target.tagName.toString()!="P"?e.target.tagName.toString():e.target.parentElement.tagName.toString()));
             deletionMenu.style.left = e.pageX.toString()+'px';
             deletionMenu.style.top = e.pageY.toString()+'px';
             deletionMenu.style.display = 'flex';
@@ -160,7 +160,6 @@ function drop(ev) {
 }
 
 function deleteObj(){
-  console.log(document.getElementsByTagName(deletionMenu.getAttribute('objectToDelete')));
   document.getElementsByTagName(deletionMenu.getAttribute('objectToDelete')).item(0).remove();
   deletionMenu.style.display = 'none';
 }
