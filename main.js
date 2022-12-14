@@ -6,6 +6,8 @@ const dimYInput = document.getElementById("ydim");
 const directionInput = document.getElementById("directions");
 const submitButton = document.getElementById("create");
 const deletionMenu = document.getElementById("deletionMenu");
+const colorChange = document.getElementById("color-choice-created-object");
+const nameObject = document.getElementById("name-object");
 const colorMenu = document.getElementById("color-choice");
 
 var draggedObject;
@@ -106,9 +108,12 @@ function createObjects(n, w1, h1, direction, t1, l1,name,color){
         }
         objectsDiv.appendChild(objects[i]);
         objects[i].addEventListener('mouseup',(e) =>{
-          e.preventDefault();
-          e.stopImmediatePropagation();
+          //e.preventDefault();
+          //e.stopImmediatePropagation();
           if(e.button==2){
+            colorChange.value = "#"+rgbToHex(e.target.style.backgroundColor.substr(4,e.target.style.backgroundColor.length-5).split(", ")).toString();
+            colorChange.style.backgroundColor = colorChange.value;
+            nameObject.value = e.target.getElementsByTagName('P')[0].innerText;
             deletionMenu.setAttribute('objectToDelete',(e.target.tagName.toString()!="P"?e.target.tagName.toString():e.target.parentElement.tagName.toString()));
             deletionMenu.style.left = e.pageX.toString()+'px';
             deletionMenu.style.top = e.pageY.toString()+'px';
@@ -120,6 +125,14 @@ function createObjects(n, w1, h1, direction, t1, l1,name,color){
         objects[i].appendChild(para);
         objectNumber+=1;
     }
+}
+
+function valueToHex(c) {
+  var hex = c.toString(16);
+  return hex
+}
+function rgbToHex(arr) {
+  return(valueToHex(parseInt(arr[0])) + valueToHex(parseInt(arr[1])) + valueToHex(parseInt(arr[2])));
 }
 
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -285,4 +298,34 @@ document.addEventListener('keydown', function(event) {
          indexOfArrow+=1;
        }
    }
+});
+
+document.addEventListener('mouseup', function(event) {
+  if(event.button==0){
+    deletionMenu.style.display = 'none';
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if(event.key == 'Escape') {
+    deletionMenu.style.display = 'none';
+  }
+});
+
+colorChange.addEventListener('mouseup', function(event) {
+  event.stopImmediatePropagation();
+});
+
+nameObject.addEventListener('mouseup', function(event) {
+  event.stopImmediatePropagation();
+});
+
+colorChange.addEventListener('change', (event) => {
+  document.getElementsByTagName(deletionMenu.getAttribute('objectToDelete')).item(0).style.backgroundColor=colorChange.value.toString();
+  deletionMenu.style.display = 'none';
+});
+
+nameObject.addEventListener('change', (event) => {
+  document.getElementsByTagName(deletionMenu.getAttribute('objectToDelete')).item(0).getElementsByTagName('P')[0].innerText=nameObject.value.toString();
+  deletionMenu.style.display = 'none';
 });
